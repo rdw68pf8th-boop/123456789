@@ -1,0 +1,980 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Velora Select｜質感生活選物</title>
+<style>
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      font-family: "Noto Sans TC", "PingFang TC", Arial, sans-serif;
+      background: #f8f5f1;
+      color: #2f2a27;
+    }
+    a { color: inherit; }
+    .wrap { width: min(1180px, 92%); margin: auto; }
+    .shadow { box-shadow: 0 12px 40px rgba(58,44,35,.09); }
+
+
+  .desktop-nav { display:flex; gap:34px; }
+  .desktop-nav a { text-decoration:none; font-size:15px; transition:.2s; }
+  .desktop-nav a:hover { opacity:.55; }
+  .iconBtn,.cartBtn {
+    border:0; background:#f0ebe6; border-radius:999px; min-height:40px;
+    padding:0 14px; cursor:pointer; transition:.2s;
+  }
+  .iconBtn:hover,.cartBtn:hover { transform:translateY(-2px); background:#e7ded7; }
+  .cartBtn { background:#2f2a27; color:#fff; }
+
+
+  .hero { overflow:hidden;border-radius:30px;background:#e9ddd3;display:grid;grid-template-columns:1fr 1.18fr;min-height:510px; }
+  .heroText { padding:70px 55px;display:flex;flex-direction:column;justify-content:center; }
+  .heroText h1 { font-family:Georgia,"Noto Serif TC",serif;font-size:58px;line-height:1.15;margin:0 0 18px; }
+  .heroText p { line-height:1.9;color:#6c625b;font-size:16px;max-width:460px; }
+  .heroPhoto {
+    background:
+      linear-gradient(90deg,rgba(233,221,211,.12),rgba(0,0,0,.02)),
+      url('https://images.unsplash.com/photo-1483985988355-763728e1935b?auto=format&fit=crop&w=1200&q=85') center/cover;
+  }
+  .mainCta,.subCta { text-decoration:none;padding:14px 24px;border-radius:999px;font-size:14px; }
+  .mainCta { background:#2f2a27;color:white; }
+  .subCta { border:1px solid #7d6c61; }
+
+
+  .categoryGrid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:18px}
+  .cat{height:290px;border-radius:22px;background-size:cover;background-position:center;position:relative;overflow:hidden;cursor:pointer}
+  .cat:after{content:"";position:absolute;inset:0;background:linear-gradient(transparent,rgba(0,0,0,.55))}
+  .cat span{position:absolute;z-index:2;left:22px;bottom:20px;color:white;font-size:25px;font-weight:700}
+  .cat:hover{transform:translateY(-3px);transition:.25s}
+  .c1{background-image:url('https://images.unsplash.com/photo-1603006905003-be475563bc59?auto=format&fit=crop&w=900&q=80')}
+  .c2{background-image:url('https://images.unsplash.com/photo-1584917865442-de89df76afd3?auto=format&fit=crop&w=900&q=80')}
+  .c3{background-image:url('https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?auto=format&fit=crop&w=900&q=80')}
+
+
+.productGrid{display:grid;grid-template-columns:repeat(4,1fr);gap:22px}
+.card{background:#faf8f5;border:1px solid #eee7e1;border-radius:20px;overflow:hidden;transition:.25s}
+.card:hover{transform:translateY(-5px);box-shadow:0 18px 40px rgba(56,42,32,.12)}
+.pic{height:300px;background-size:cover;background-position:center;position:relative}
+.tag{position:absolute;left:13px;top:13px;background:white;padding:7px 10px;border-radius:999px;font-size:12px;font-weight:bold}
+.info{padding:18px}
+.info h3{margin:7px 0 9px;font-size:18px}
+.stars{font-size:13px;color:#bb815c}.stars span{color:#999}
+.price{display:flex;gap:10px;align-items:center;margin:12px 0 15px}.price del{color:#aaa;font-size:13px}
+.info button{width:100%;border:0;background:#2f2a27;color:#fff;padding:12px;border-radius:11px;cursor:pointer;font-weight:bold}
+.info button:hover{background:#b47a58}
+.info button[disabled]{opacity:.45;cursor:not-allowed;background:#2f2a27}
+
+
+.storyBox{display:grid;grid-template-columns:1.1fr 1fr;border-radius:26px;overflow:hidden}
+
+
+.serviceGrid{display:grid;grid-template-columns:repeat(4,1fr);gap:20px;text-align:center}
+.serviceGrid p{color:#81756d;font-size:14px}.serviceIcon{font-size:28px}
+
+
+.footerGrid{display:grid;grid-template-columns:1.5fr 1fr 1fr 1.3fr;gap:30px}
+.footerGrid p{font-size:13px;color:#80766f;margin:10px 0}
+
+
+@media(max-width:900px){
+  .desktop-nav{display:none}
+  .hero{grid-template-columns:1fr;min-height:auto}
+  .heroPhoto{height:390px}
+  .heroText{padding:48px 30px}
+  .heroText h1{font-size:45px}
+  .productGrid{grid-template-columns:repeat(2,1fr)}
+  .categoryGrid{grid-template-columns:1fr 1fr}
+  .cat:last-child{grid-column:1/-1}
+  .storyBox{grid-template-columns:1fr}
+  .serviceGrid{grid-template-columns:1fr 1fr}
+  .footerGrid{grid-template-columns:1fr 1fr}
+}
+@media(max-width:560px){
+  .heroText h1{font-size:37px}
+  .heroPhoto{height:310px}
+  .productGrid{grid-template-columns:1fr}
+  .categoryGrid{grid-template-columns:1fr}
+  .cat:last-child{grid-column:auto}
+  .serviceGrid,.footerGrid{grid-template-columns:1fr}
+  .pic{height:360px}
+  .cartBtn{padding:0 10px}
+}
+
+
+/* Extracted inline styles */
+#styleEl1 { background:#2f2a27;color:white;text-align:center;padding:9px 12px;font-size:14px;cursor:pointer; }
+#styleEl2 { background:rgba(255,255,255,.94);position:sticky;top:0;z-index:50;border-bottom:1px solid #eee7e1; }
+#styleEl3 { display:flex;align-items:center;justify-content:space-between;height:78px; }
+#styleEl4 { font-family:Georgia,serif;font-size:29px;letter-spacing:2px;font-weight:bold; }
+#styleEl5 { display:flex;gap:9px;align-items:center; }
+#searchBox { display:none;background:white;border-bottom:1px solid #eee;padding:18px; }
+#styleEl9 { display:flex;gap:10px; }
+#searchInput { flex:1;border:1px solid #d8d0ca;border-radius:12px;padding:13px 15px;font-size:15px; }
+#styleEl10 { border:0;background:#b98562;color:white;border-radius:12px;padding:0 24px;cursor:pointer; }
+#styleEl11 { padding:42px 0 28px; }
+#styleEl12 { font-size:13px;letter-spacing:3px;color:#9b6d50;margin-bottom:14px; }
+#styleEl13 { display:flex;gap:10px;flex-wrap:wrap;margin-top:25px; }
+#new { padding:62px 0 35px; }
+#styleEl14 { display:flex;justify-content:space-between;align-items:end;margin-bottom:25px; }
+#styleEl15 { color:#a7785c;font-size:13px;letter-spacing:2px; }
+#styleEl16 { font-size:34px;margin:8px 0 0;font-family:Georgia,'Noto Serif TC',serif; }
+#styleEl17 { font-size:14px;color:#7a706a; }
+#products { padding:55px 0;background:#fff; }
+#styleEl18 { text-align:center;margin-bottom:34px; }
+#styleEl19 { font-size:13px;color:#aa795b;letter-spacing:2px; }
+#styleEl20 { font:700 36px Georgia,'Noto Serif TC',serif;margin:10px 0; }
+#styleEl21 { color:#807670; }
+.catLabel { font-size:13px;color:#9b918b; }
+#toast { display:none;position:fixed;right:24px;bottom:24px;z-index:400;background:#2f2a27;color:white;padding:14px 18px;border-radius:12px;box-shadow:0 12px 35px rgba(0,0,0,.22);font-size:14px;max-width:min(360px,86vw); }
+#story { padding:80px 0; }
+#styleEl30 { min-height:430px;background:url('https://images.unsplash.com/photo-1524758631624-e2822e304c36?auto=format&fit=crop&w=1100&q=80') center/cover; }
+#styleEl31 { padding:55px;background:#e9ddd3;display:flex;flex-direction:column;justify-content:center; }
+#styleEl32 { color:#9f6c4e;font-size:13px;letter-spacing:2px; }
+#styleEl33 { font:700 39px Georgia,'Noto Serif TC',serif;margin:13px 0; }
+#styleEl34 { line-height:2;color:#6e625b; }
+#styleEl35 { margin-top:20px;font-weight:bold;text-decoration:none; }
+#service { background:#efe9e4;padding:55px 0; }
+#styleEl36 { padding:70px 0; }
+#styleEl37 { background:#2f2a27;color:white;border-radius:28px;padding:48px;text-align:center; }
+#styleEl38 { letter-spacing:2px;color:#d7bca9;font-size:13px; }
+#styleEl39 { font:700 34px Georgia,'Noto Serif TC',serif;margin:12px 0; }
+#styleEl40 { color:#d6cdc7; }
+#styleEl41 { display:flex;max-width:520px;margin:25px auto 0;background:white;padding:6px;border-radius:999px; }
+#email { flex:1;border:0;outline:0;padding:12px 16px;border-radius:999px; }
+#styleEl42 { border:0;background:#b7805e;color:white;border-radius:999px;padding:0 22px;cursor:pointer; }
+#styleEl43 { background:#fff;border-top:1px solid #eee6df;padding:45px 0 25px; }
+#styleEl44 { font:700 25px Georgia,serif;letter-spacing:2px; }
+#styleEl45 { color:#8a8079;line-height:1.8;font-size:14px; }
+#styleEl46 { font-size:12px;color:#aaa;margin-top:30px;border-top:1px solid #eee;padding-top:20px; }
+#cartPanel { position:fixed;right:-380px;top:0;width:min(380px,92vw);height:100vh;background:white;z-index:200;box-shadow:-10px 0 35px rgba(0,0,0,.16);transition:.35s;padding:24px;overflow:auto; }
+#styleEl47 { display:flex;justify-content:space-between;align-items:center; }
+#styleEl48 { border:0;background:#eee;border-radius:50%;width:36px;height:36px;cursor:pointer; }
+#cartItems { margin-top:22px;color:#736861; }
+#styleEl49 { margin-top:28px;border-top:1px solid #eee;padding-top:20px; }
+#styleEl50 { display:flex;justify-content:space-between; }
+#styleEl51 { width:100%;margin-top:18px;padding:14px;border:0;background:#2f2a27;color:white;border-radius:12px;cursor:pointer; }
+#mask { display:none;position:fixed;inset:0;background:rgba(0,0,0,.34);z-index:150; }
+
+/* ===== 新增：會員 / 商品管理 / 商品細節 / 結帳（沿用原有色系與圓角） ===== */
+.modalMask{display:none;position:fixed;inset:0;background:rgba(0,0,0,.34);z-index:300;align-items:center;justify-content:center;padding:16px}
+.modalMask.open{display:flex}
+.modalBox{background:#fff;border-radius:22px;width:min(600px,100%);max-height:90vh;overflow:auto;padding:28px;box-shadow:0 18px 50px rgba(0,0,0,.22);position:relative}
+.modalBox.wide{width:min(780px,100%)}
+.modalClose{position:absolute;right:16px;top:16px;border:0;background:#eee;border-radius:50%;width:36px;height:36px;cursor:pointer}
+.modalBox h2{font:700 26px Georgia,'Noto Serif TC',serif;margin:0 0 6px;padding-right:40px}
+.modalBox .sub{color:#807670;font-size:14px;margin:0 0 6px}
+.tabs{display:flex;gap:8px;flex-wrap:wrap;margin:14px 0 20px}
+.tabs button{border:0;background:#f0ebe6;border-radius:999px;padding:9px 16px;cursor:pointer;font-size:14px}
+.tabs button.on{background:#2f2a27;color:#fff}
+.fld{display:block;margin-bottom:14px;font-size:13px;color:#6c625b}
+.fld input,.fld select,.fld textarea{display:block;width:100%;margin-top:6px;border:1px solid #d8d0ca;border-radius:12px;padding:12px 14px;font-size:15px;font-family:inherit;background:#fff;color:#2f2a27}
+.fld textarea{min-height:80px;resize:vertical}
+.fld input[readonly]{background:#f6f2ee;color:#8a8079}
+.row2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.btnMain{border:0;background:#2f2a27;color:#fff;border-radius:12px;padding:13px 20px;cursor:pointer;font-size:15px;font-weight:bold}
+.btnMain:hover{background:#b47a58}
+.btnMain[disabled]{opacity:.5;cursor:not-allowed}
+.btnGhost{border:1px solid #7d6c61;background:transparent;border-radius:12px;padding:10px 16px;cursor:pointer;font-size:14px}
+.btnRow{display:flex;gap:10px;flex-wrap:wrap;margin-top:8px;align-items:center}
+.msg{font-size:13px;margin:8px 0;min-height:18px;color:#a8432f}
+.msg.ok{color:#3c7a4f}
+.linkBtn{border:0;background:none;color:#9b6d50;cursor:pointer;text-decoration:underline;padding:0;font-size:13px}
+.listRow{border-bottom:1px solid #eee;padding:13px 0;display:flex;justify-content:space-between;gap:12px;align-items:center}
+.listRow small{color:#9b918b;display:block;margin-top:3px;font-size:12px;line-height:1.6}
+.badge{display:inline-block;background:#efe9e4;border-radius:999px;padding:3px 10px;font-size:12px}
+.detailGrid{display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-top:14px}
+.detailPic{min-height:320px;border-radius:18px;background:#e9ddd3 center/cover}
+.detailInfo p{line-height:1.9;color:#6c625b;font-size:14px}
+.qtyBox{display:inline-flex;align-items:center;border:1px solid #d8d0ca;border-radius:999px;overflow:hidden}
+.qtyBox button{border:0;background:#f0ebe6;width:30px;height:30px;cursor:pointer}
+.qtyBox span{min-width:32px;text-align:center;font-size:14px}
+.sumLine{display:flex;justify-content:space-between;padding:6px 0;font-size:14px;color:#6c625b}
+.sumLine.total{font-weight:bold;color:#2f2a27;font-size:17px;border-top:1px solid #eee;margin-top:6px;padding-top:12px}
+.payOpt{display:flex;gap:10px;align-items:flex-start;border:1px solid #d8d0ca;border-radius:12px;padding:12px;margin-bottom:8px;cursor:pointer;font-size:14px}
+.payOpt input{margin-top:3px}
+.payOpt small{display:block;color:#9b918b;margin-top:2px}
+#filterBar{display:none;text-align:center;margin:-10px 0 22px;font-size:14px;color:#7a706a}
+.emptyNote{grid-column:1/-1;text-align:center;color:#9b918b;padding:40px 0}
+.pic,.info h3{cursor:pointer}
+@media(max-width:560px){.row2,.detailGrid{grid-template-columns:1fr}.modalBox{padding:22px}}
+</style>
+</head>
+<body>
+<div id="styleEl1">
+  本週限定｜滿 NT$1,500 免運・新會員再享 95 折
+</div>
+<header id="styleEl2">
+<div class="wrap" id="styleEl3">
+<div id="styleEl4">VELORA</div>
+<nav class="desktop-nav">
+<a href="#new">新品</a>
+<a href="#products">熱賣商品</a>
+<a href="#story">品牌故事</a>
+<a href="#service">購物服務</a>
+</nav>
+<div id="styleEl5">
+<button class="iconBtn" id="clickEl6" title="搜尋">⌕</button>
+<button class="iconBtn" id="clickEl7" title="會員登入 / 會員中心">♡</button>
+<button class="cartBtn" id="clickEl8">購物袋 <b id="cartCount">0</b></button>
+</div>
+</div>
+</header>
+
+<div id="searchBox">
+<div class="wrap" id="styleEl9">
+<input id="searchInput" placeholder="搜尋商品，例如：香氛、包款、居家用品">
+<button id="styleEl10">搜尋</button>
+</div>
+</div>
+
+<section id="styleEl11">
+<div class="wrap hero shadow">
+<div class="heroText">
+<div id="styleEl12">AUTUMN COLLECTION 2026</div>
+<h1>把日常，<br>過得更有質感。</h1>
+<p>從香氣、穿搭到生活器物，精選值得長久陪伴的設計。</p>
+<div id="styleEl13">
+<a class="mainCta" href="#products">立即選購</a>
+<a class="subCta" href="#story">認識品牌</a>
+</div>
+</div>
+<div class="heroPhoto"></div>
+</div>
+</section>
+
+<section class="wrap" id="new">
+<div id="styleEl14">
+<div>
+<div id="styleEl15">CURATED CATEGORY</div>
+<h2 id="styleEl16">探索你的生活風格</h2>
+</div>
+<div id="styleEl17">精選 2026 秋季人氣分類</div>
+</div>
+<div class="categoryGrid">
+<div class="cat c1" data-cat="AROMA"><span>香氛生活</span></div>
+<div class="cat c2" data-cat="BAG"><span>質感包款</span></div>
+<div class="cat c3" data-cat="HOME"><span>居家選物</span></div>
+</div>
+</section>
+
+<section id="products">
+<div class="wrap">
+<div id="styleEl18">
+<div id="styleEl19">BEST SELLERS</div>
+<h2 id="styleEl20">本月熱賣選品</h2>
+<p id="styleEl21">那些被反覆選擇的，通常最值得留下。</p>
+</div>
+<div id="filterBar"></div>
+<div class="productGrid" id="productGrid"></div>
+</div>
+</section>
+
+
+<div id="toast" role="status" aria-live="polite"></div>
+<section class="wrap" id="story">
+<div class="storyBox">
+<div id="styleEl30"></div>
+<div id="styleEl31">
+<div id="styleEl32">OUR STORY</div>
+<h2 id="styleEl33">設計不是炫耀，<br>而是讓生活剛剛好。</h2>
+<p id="styleEl34">VELORA 從日常出發，挑選兼具外型、手感與實用性的商品。我們相信，真正好的物件不必喧嘩，卻能在每天使用時，讓人感受到細節。</p>
+<a href="#" id="styleEl35">閱讀品牌故事 →</a>
+</div>
+</div>
+</section>
+
+<section id="service">
+<div class="wrap serviceGrid">
+<div><div class="serviceIcon">🚚</div><h3>全台宅配</h3><p>滿 NT$1,500 享免運服務</p></div>
+<div><div class="serviceIcon">↩</div><h3>安心退換貨</h3><p>到貨 7 日內可申請退貨</p></div>
+<div><div class="serviceIcon">🎁</div><h3>精緻包裝</h3><p>送禮自用都很有質感</p></div>
+<div><div class="serviceIcon">💬</div><h3>專人客服</h3><p>週一至週五 09:00–18:00</p></div>
+</div>
+</section>
+
+<section id="styleEl36">
+<div class="wrap" id="styleEl37">
+<div id="styleEl38">JOIN OUR LETTER</div>
+<h2 id="styleEl39">訂閱 VELORA 生活提案</h2>
+<p id="styleEl40">第一時間收到新品、限定優惠與風格靈感。</p>
+<div id="styleEl41">
+<input id="email" placeholder="請輸入 Email" type="email" maxlength="100">
+<button id="styleEl42">立即訂閱</button>
+</div>
+</div>
+</section>
+
+<footer id="styleEl43">
+<div class="wrap footerGrid">
+<div>
+<div id="styleEl44">VELORA</div>
+<p id="styleEl45">Select better things.<br>Live a softer life.</p>
+</div>
+<div><b>購物指南</b><p>配送說明</p><p>退換貨政策</p><p>付款方式</p></div>
+<div><b>關於我們</b><p>品牌故事</p><p>媒體合作</p><p>門市資訊</p></div>
+<div><b>聯絡我們</b><p>service@velora.example</p><p>02-2345-6789</p><p>台北市信義區</p></div>
+</div>
+<div class="wrap" id="styleEl46">© 2026 VELORA Select. Demo shopping website.</div>
+</footer>
+
+<div id="cartPanel">
+<div id="styleEl47">
+<h2>你的購物袋</h2>
+<button id="styleEl48" aria-label="關閉購物袋">✕</button>
+</div>
+<div id="cartItems">目前購物袋是空的。</div>
+<div id="styleEl49">
+<div id="styleEl50"><b>總計</b><b id="cartTotal">NT$0</b></div>
+<button id="styleEl51">前往結帳</button>
+</div>
+</div>
+<div id="mask"></div>
+
+<div class="modalMask" id="modal" role="dialog" aria-modal="true"><div class="modalBox" id="modalBox"></div></div>
+
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-app.js";
+import {
+  getAuth, onAuthStateChanged, createUserWithEmailAndPassword, signInWithEmailAndPassword,
+  signOut, sendPasswordResetEmail, updateProfile
+} from "https://www.gstatic.com/firebasejs/10.14.1/firebase-auth.js";
+import {
+  getFirestore, collection, doc, getDoc, getDocs, setDoc, addDoc, updateDoc, deleteDoc,
+  query, where, orderBy, limit, onSnapshot, serverTimestamp, writeBatch, deleteField
+} from "https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore.js";
+
+/* ================= Firebase 設定 =================
+   apiKey 本來就會公開在前端，真正的保護來自 Firestore 規則與 Authentication 授權網域。 */
+const firebaseConfig = {
+  apiKey: "AIzaSyD1chmoq1YS5EuNToF41tPZm9MSPgEwqek",
+  authDomain: "xxxxx-76296.firebaseapp.com",
+  projectId: "xxxxx-76296",
+  storageBucket: "xxxxx-76296.firebasestorage.app",
+  messagingSenderId: "873548105726",
+  appId: "1:873548105726:web:dbc295b23504b7198ba2af",
+  measurementId: "G-7ZDFKE25HN"
+};
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+const db = getFirestore(app);
+
+/* ================= 站台設定 ================= */
+const CATS = { AROMA: "香氛生活", BAG: "質感包款", HOME: "居家選物", ACCESSORY: "配件飾品" };
+const FREE_SHIP = 1500, SHIP_FEE = 80, NEW_MEMBER_RATE = 0.95;
+const PAYMENT_LINK_URL = ""; // 之後串接 Stripe Payment Link / 綠界等金流頁面時填入（需 https）
+const PAY_LABEL = { cod: "貨到付款", transfer: "銀行轉帳", card: "信用卡線上付款（示範）" };
+const ORDER_STATUS = { pending: "待處理", paid: "已付款", shipped: "已出貨", completed: "已完成", cancelled: "已取消" };
+const PAY_STATUS = { unpaid: "未付款", paid: "已付款", refunded: "已退款" };
+
+const DEFAULT_PRODUCTS = [
+  { id: "p1", name: "晨霧木質香氛蠟燭", category: "AROMA", price: 880, oldPrice: 980, tag: "人氣 No.1", rating: 5, reviews: 128, stock: 50,
+    image: "https://images.unsplash.com/photo-1608181831718-c9ffd66e3072?auto=format&fit=crop&w=700&q=80",
+    description: "以雪松與微霧般的木質調為主軸，燃燒時香氣柔和不刺鼻，適合臥室與書房，約可使用 40 小時。" },
+  { id: "p2", name: "雲朵柔皮肩背包", category: "BAG", price: 2380, tag: "NEW", rating: 5, reviews: 86, stock: 30,
+    image: "https://images.unsplash.com/photo-1566150905458-1bf1fc113f0d?auto=format&fit=crop&w=700&q=80",
+    description: "柔軟皮革打造輕盈線條，容量足夠放入日常必需品，內附隔層，通勤與週末出遊都合適。" },
+  { id: "p3", name: "奶油白陶瓷花器", category: "HOME", price: 1280, tag: "", rating: 4, reviews: 64, stock: 20,
+    image: "https://images.unsplash.com/photo-1610701596007-11502861dcfa?auto=format&fit=crop&w=700&q=80",
+    description: "霧面奶油白釉色，手感溫潤，單支花或乾燥花都好看，為居家角落增添安靜的存在感。" },
+  { id: "p4", name: "復古金屬細框腕錶", category: "ACCESSORY", price: 1680, oldPrice: 1880, tag: "限量", rating: 5, reviews: 71, stock: 15,
+    image: "https://images.unsplash.com/photo-1524805444758-089113d48a6d?auto=format&fit=crop&w=700&q=80",
+    description: "細緻金屬錶框搭配簡約錶面，日常生活防潑水，輕巧不厚重，適合各種穿搭。" }
+];
+
+/* ================= 工具 ================= */
+const $ = id => document.getElementById(id);
+const fmt = n => "NT$" + Number(n || 0).toLocaleString();
+
+// 以 DOM API 建立元素：所有使用者資料都走 textContent，避免 XSS
+function h(tag, props = {}, ...kids) {
+  const el = document.createElement(tag);
+  for (const [k, v] of Object.entries(props || {})) {
+    if (v === false || v == null) continue;
+    if (k === "class") el.className = v;
+    else if (k === "style") el.style.cssText = v;
+    else if (k.startsWith("on") && typeof v === "function") el.addEventListener(k.slice(2), v);
+    else el.setAttribute(k, v === true ? "" : v);
+  }
+  for (const kid of kids.flat(Infinity)) {
+    if (kid == null || kid === false) continue;
+    el.append(kid.nodeType ? kid : document.createTextNode(String(kid)));
+  }
+  return el;
+}
+const field = (label, input) => h("label", { class: "fld" }, label, input);
+
+function safeImg(u) {
+  return typeof u === "string" && /^https:\/\/[^\s"'()<>\\]+$/.test(u) && u.length <= 500 ? u : "";
+}
+function setBg(el, u) { const s = safeImg(u); if (s) el.style.backgroundImage = 'url("' + s + '")'; }
+
+function toast(msg) {
+  const t = $("toast");
+  t.textContent = msg;
+  t.style.display = "block";
+  clearTimeout(window.toastTimer);
+  window.toastTimer = setTimeout(() => { t.style.display = "none"; }, 2200);
+}
+
+const ERR = {
+  "auth/invalid-credential": "Email 或密碼不正確",
+  "auth/wrong-password": "Email 或密碼不正確",
+  "auth/user-not-found": "Email 或密碼不正確",
+  "auth/email-already-in-use": "此 Email 已註冊，請直接登入",
+  "auth/weak-password": "密碼強度不足（至少 8 碼）",
+  "auth/invalid-email": "Email 格式不正確",
+  "auth/too-many-requests": "嘗試次數過多，請稍後再試",
+  "auth/network-request-failed": "網路連線失敗，請檢查網路",
+  "auth/operation-not-allowed": "尚未在 Firebase 啟用「電子郵件/密碼」登入",
+  "permission-denied": "沒有權限執行此操作",
+  "unavailable": "服務暫時無法使用，請稍後再試"
+};
+function errText(e) {
+  const c = (e && e.code) || "";
+  console.warn(e);
+  return ERR[c] || "發生錯誤，請稍後再試" + (c ? "（" + c + "）" : "");
+}
+const fmtDate = ts => { try { return ts.toDate().toLocaleString("zh-TW", { hour12: false }); } catch { return "—"; } };
+
+/* ================= 狀態 ================= */
+let user = null, isAdmin = false, profile = null, pendingName = "";
+let products = DEFAULT_PRODUCTS, usingDefaults = true;
+let cart = [];
+let unsubCart = null;
+let filter = { cat: "", key: "" };
+let productsListener = null;
+const LS = "velora_cart_v1";
+
+function loadLocal() {
+  try {
+    const a = JSON.parse(localStorage.getItem(LS) || "[]");
+    return Array.isArray(a) ? a.filter(i => i && typeof i.pid === "string" && Number.isInteger(i.qty)).slice(0, 50) : [];
+  } catch { return []; }
+}
+function saveLocal() { try { localStorage.setItem(LS, JSON.stringify(cart)); } catch {} }
+
+/* ================= 商品 ================= */
+function normProduct(id, d) {
+  return {
+    id, name: String(d.name || ""), category: String(d.category || ""), price: Number(d.price) || 0,
+    oldPrice: d.oldPrice != null ? Number(d.oldPrice) : undefined,
+    tag: String(d.tag || ""), rating: Math.max(0, Math.min(5, Math.round(Number(d.rating) || 0))),
+    reviews: Number(d.reviews) || 0, stock: d.stock != null ? Number(d.stock) : undefined,
+    image: safeImg(d.image), description: String(d.description || ""),
+    createdAt: d.createdAt && d.createdAt.toMillis ? d.createdAt.toMillis() : 0
+  };
+}
+
+onSnapshot(collection(db, "products"), snap => {
+  if (snap.empty) { products = DEFAULT_PRODUCTS; usingDefaults = true; }
+  else {
+    products = snap.docs.map(d => normProduct(d.id, d.data()))
+      .sort((a, b) => (a.createdAt - b.createdAt) || a.id.localeCompare(b.id));
+    usingDefaults = false;
+  }
+  renderProducts(); renderCart();
+  if (productsListener) productsListener();
+}, err => { console.warn(err); toast("商品載入失敗，先顯示示範商品"); });
+
+function renderProducts() {
+  const key = filter.key.toLowerCase();
+  const list = products.filter(p =>
+    (!filter.cat || p.category === filter.cat) &&
+    (!key || (p.name + " " + p.category + " " + (CATS[p.category] || "") + " " + p.description).toLowerCase().includes(key)));
+  const grid = $("productGrid");
+  if (!list.length) { grid.replaceChildren(h("div", { class: "emptyNote" }, "找不到符合的商品，試試其他關鍵字。")); }
+  else grid.replaceChildren(...list.map(productCard));
+
+  const bar = $("filterBar");
+  if (filter.cat || filter.key) {
+    const label = [filter.cat ? CATS[filter.cat] || filter.cat : "", filter.key ? "「" + filter.key + "」" : ""].filter(Boolean).join(" ・ ");
+    bar.replaceChildren("目前篩選：" + label + "　", h("button", { class: "linkBtn", onclick: () => { filter = { cat: "", key: "" }; $("searchInput").value = ""; renderProducts(); } }, "顯示全部商品"));
+    bar.style.display = "block";
+  } else bar.style.display = "none";
+}
+
+function productCard(p) {
+  const pic = h("div", { class: "pic", onclick: () => openDetail(p) }, p.tag ? h("div", { class: "tag" }, p.tag) : null);
+  setBg(pic, p.image);
+  const sold = p.stock !== undefined && p.stock <= 0;
+  return h("div", { class: "card" },
+    pic,
+    h("div", { class: "info" },
+      h("div", { class: "catLabel" }, p.category),
+      h("h3", { onclick: () => openDetail(p) }, p.name),
+      h("div", { class: "stars" }, "★".repeat(p.rating) + "☆".repeat(5 - p.rating) + " ", h("span", {}, "(" + p.reviews + ")")),
+      h("div", { class: "price" }, h("b", {}, fmt(p.price)), p.oldPrice ? h("del", {}, fmt(p.oldPrice)) : null),
+      h("button", { disabled: sold, onclick: () => addToCart(p, 1) }, sold ? "已售完" : "加入購物袋")));
+}
+
+function openDetail(p) {
+  let qty = 1;
+  const qEl = h("span", {}, "1");
+  const pic = h("div", { class: "detailPic" }); setBg(pic, p.image);
+  const sold = p.stock !== undefined && p.stock <= 0;
+  const maxQ = p.stock !== undefined ? Math.max(1, Math.min(99, p.stock)) : 99;
+  const set = n => { qty = Math.max(1, Math.min(maxQ, n)); qEl.textContent = qty; };
+  openModal([
+    h("h2", {}, p.name),
+    h("p", { class: "sub" }, (CATS[p.category] || p.category)),
+    h("div", { class: "detailGrid" }, pic,
+      h("div", { class: "detailInfo" },
+        h("div", { class: "stars" }, "★".repeat(p.rating) + "☆".repeat(5 - p.rating) + " ", h("span", {}, "(" + p.reviews + " 則評價)")),
+        h("div", { class: "price" }, h("b", { style: "font-size:24px" }, fmt(p.price)), p.oldPrice ? h("del", {}, fmt(p.oldPrice)) : null),
+        h("p", {}, p.description || "—"),
+        p.stock !== undefined ? h("p", { style: "font-size:13px" }, sold ? "目前已售完" : "庫存 " + p.stock + " 件") : null,
+        h("div", { class: "btnRow" },
+          h("div", { class: "qtyBox" }, h("button", { onclick: () => set(qty - 1), "aria-label": "減少" }, "−"), qEl, h("button", { onclick: () => set(qty + 1), "aria-label": "增加" }, "＋")),
+          h("button", { class: "btnMain", disabled: sold, onclick: async () => { await addToCart(p, qty); closeModal(); } }, sold ? "已售完" : "加入購物袋"))))
+  ], true);
+}
+
+/* ================= 搜尋 / 分類 ================= */
+function applySearch() {
+  const k = $("searchInput").value.trim();
+  filter.key = k;
+  renderProducts();
+  document.getElementById("products").scrollIntoView({ behavior: "smooth" });
+}
+
+/* ================= 購物車 ================= */
+const effPrice = it => { const p = products.find(x => x.id === it.pid); return p ? p.price : it.price; };
+const cartSubtotal = () => cart.reduce((s, i) => s + effPrice(i) * i.qty, 0);
+
+async function addToCart(p, qty = 1) {
+  if (p.stock !== undefined && p.stock <= 0) { toast("此商品已售完"); return; }
+  const ex = cart.find(i => i.pid === p.id);
+  const q = Math.min(99, (ex ? ex.qty : 0) + qty);
+  const item = { pid: p.id, name: p.name, price: p.price, image: safeImg(p.image), qty: q };
+  try {
+    if (user) await setDoc(doc(db, "carts", user.uid, "items", p.id), { ...item, updatedAt: serverTimestamp() });
+    else {
+      if (ex) ex.qty = q; else cart.push(item);
+      saveLocal(); renderCart();
+    }
+    toast("✓ 已加入購物袋：" + p.name);
+  } catch (e) { toast(errText(e)); }
+}
+async function setQty(pid, q) {
+  if (q <= 0) return removeItem(pid);
+  q = Math.min(99, q);
+  try {
+    if (user) await updateDoc(doc(db, "carts", user.uid, "items", pid), { qty: q, updatedAt: serverTimestamp() });
+    else { const it = cart.find(i => i.pid === pid); if (it) it.qty = q; saveLocal(); renderCart(); }
+  } catch (e) { toast(errText(e)); }
+}
+async function removeItem(pid) {
+  try {
+    if (user) await deleteDoc(doc(db, "carts", user.uid, "items", pid));
+    else { cart = cart.filter(i => i.pid !== pid); saveLocal(); renderCart(); }
+  } catch (e) { toast(errText(e)); }
+}
+
+function renderCart() {
+  const box = $("cartItems");
+  $("cartCount").textContent = cart.reduce((s, i) => s + i.qty, 0);
+  if (!cart.length) box.replaceChildren("目前購物袋是空的。");
+  else box.replaceChildren(...cart.map(it => h("div", { style: "padding:13px 0;border-bottom:1px solid #eee;display:flex;justify-content:space-between;gap:12px;" },
+    h("div", { style: "flex:1" },
+      h("div", {}, it.name),
+      h("div", { class: "qtyBox", style: "margin-top:8px" },
+        h("button", { onclick: () => setQty(it.pid, it.qty - 1), "aria-label": "減少" }, "−"),
+        h("span", {}, it.qty),
+        h("button", { onclick: () => setQty(it.pid, it.qty + 1), "aria-label": "增加" }, "＋"))),
+    h("div", { style: "text-align:right" },
+      h("b", {}, fmt(effPrice(it) * it.qty)),
+      h("div", {}, h("button", { class: "linkBtn", onclick: () => removeItem(it.pid) }, "移除"))))));
+  $("cartTotal").textContent = fmt(cartSubtotal());
+}
+function openCart() { $("cartPanel").style.right = "0"; $("mask").style.display = "block"; renderCart(); }
+function closeCart() { $("cartPanel").style.right = "-380px"; $("mask").style.display = "none"; }
+
+/* ================= Modal ================= */
+const modal = $("modal"), modalBox = $("modalBox");
+function openModal(nodes, wide = false) {
+  productsListener = null;
+  modalBox.className = "modalBox" + (wide ? " wide" : "");
+  modalBox.replaceChildren(h("button", { class: "modalClose", "aria-label": "關閉", onclick: closeModal }, "✕"), ...nodes);
+  modal.classList.add("open");
+  modalBox.scrollTop = 0;
+}
+function closeModal() { productsListener = null; modal.classList.remove("open"); modalBox.replaceChildren(); }
+modal.addEventListener("mousedown", e => { if (e.target === modal) closeModal(); });
+document.addEventListener("keydown", e => { if (e.key === "Escape") { closeModal(); closeCart(); } });
+
+/* ================= 會員：登入 / 註冊 ================= */
+function openAuth(mode = "login", note = "") {
+  const isReg = mode === "register";
+  const msg = h("div", { class: "msg" }, note);
+  const iName = h("input", { type: "text", maxlength: "50", autocomplete: "name", placeholder: "您的姓名" });
+  const iEmail = h("input", { type: "email", maxlength: "100", autocomplete: "email", placeholder: "name@example.com", required: true });
+  const iPw = h("input", { type: "password", maxlength: "64", autocomplete: isReg ? "new-password" : "current-password", placeholder: isReg ? "至少 8 碼" : "密碼", required: true });
+  const submit = h("button", { class: "btnMain", type: "submit" }, isReg ? "註冊" : "登入");
+  const form = h("form", {
+    onsubmit: async ev => {
+      ev.preventDefault();
+      const email = iEmail.value.trim(), pw = iPw.value, name = iName.value.trim();
+      msg.className = "msg"; msg.textContent = "";
+      if (isReg && !name) { msg.textContent = "請輸入姓名"; return; }
+      if (isReg && pw.length < 8) { msg.textContent = "密碼至少需要 8 碼"; return; }
+      submit.disabled = true;
+      try {
+        if (isReg) { pendingName = name; await createUserWithEmailAndPassword(auth, email, pw); }
+        else await signInWithEmailAndPassword(auth, email, pw);
+        closeModal(); toast(isReg ? "🎉 註冊成功，歡迎加入 VELORA" : "✓ 登入成功");
+      } catch (e) { pendingName = ""; msg.textContent = errText(e); submit.disabled = false; }
+    }
+  },
+    isReg ? field("姓名", iName) : null,
+    field("Email", iEmail),
+    field("密碼", iPw),
+    msg,
+    h("div", { class: "btnRow" }, submit,
+      !isReg ? h("button", { type: "button", class: "linkBtn", onclick: async () => {
+        const email = iEmail.value.trim();
+        if (!email) { msg.className = "msg"; msg.textContent = "請先在上方輸入 Email"; return; }
+        try { await sendPasswordResetEmail(auth, email); msg.className = "msg ok"; msg.textContent = "若此 Email 已註冊，重設密碼信已寄出，請查收信箱。"; }
+        catch (e) { msg.className = "msg"; msg.textContent = errText(e); }
+      } }, "忘記密碼？") : null),
+    h("div", { style: "margin-top:14px" }, h("button", { type: "button", class: "linkBtn", onclick: () => openAuth(isReg ? "login" : "register") },
+      isReg ? "已有帳號？前往登入" : "還沒有帳號？免費註冊（首購享 95 折）")));
+  openModal([h("h2", {}, isReg ? "加入 VELORA 會員" : "會員登入"), h("p", { class: "sub" }, "使用 Email 與密碼"), h("div", { style: "height:14px" }), form]);
+  iEmail.focus();
+}
+
+async function doLogout() { try { await signOut(auth); closeModal(); toast("已登出"); } catch (e) { toast(errText(e)); } }
+
+/* ================= 會員中心 ================= */
+function openMember(tab = "profile") {
+  if (!user) { openAuth(); return; }
+  const body = h("div");
+  const tabs = [["profile", "會員資料"], ["orders", "我的訂單"]];
+  if (isAdmin) tabs.push(["aproducts", "商品管理"], ["aorders", "訂單管理"]);
+  const bar = h("div", { class: "tabs" },
+    tabs.map(([k, t]) => h("button", { class: k === tab ? "on" : "", onclick: () => openMember(k) }, t)),
+    h("button", { onclick: doLogout }, "登出"));
+  openModal([h("h2", {}, "會員中心"), h("p", { class: "sub" }, user.email + (isAdmin ? "（管理員）" : "")), bar, body], tab.startsWith("a") || tab === "orders");
+  ({ profile: tabProfile, orders: tabOrders, aproducts: tabAdminProducts, aorders: tabAdminOrders })[tab](body);
+}
+
+function tabProfile(body) {
+  const p = profile || {};
+  const iName = h("input", { type: "text", maxlength: "50", value: p.name || "", required: true });
+  const iPhone = h("input", { type: "tel", maxlength: "20", value: p.phone || "", placeholder: "例如 0912-345-678" });
+  const iAddr = h("input", { type: "text", maxlength: "200", value: p.address || "", placeholder: "收件地址" });
+  const iMail = h("input", { type: "email", value: user.email, readonly: true });
+  const msg = h("div", { class: "msg" });
+  const save = h("button", { class: "btnMain", type: "submit" }, "儲存變更");
+  body.append(h("form", {
+    onsubmit: async ev => {
+      ev.preventDefault();
+      const name = iName.value.trim(), phone = iPhone.value.trim(), address = iAddr.value.trim();
+      msg.className = "msg";
+      if (!name) { msg.textContent = "請輸入姓名"; return; }
+      if (phone && !/^[0-9+\-\s()]{8,20}$/.test(phone)) { msg.textContent = "電話格式不正確"; return; }
+      save.disabled = true;
+      try {
+        await updateDoc(doc(db, "users", user.uid), { name, phone, address, updatedAt: serverTimestamp() });
+        await updateProfile(user, { displayName: name });
+        profile = { ...profile, name, phone, address };
+        msg.className = "msg ok"; msg.textContent = "已儲存";
+      } catch (e) { msg.textContent = errText(e); }
+      save.disabled = false;
+    }
+  }, field("Email（不可修改）", iMail), field("姓名", iName),
+    h("div", { class: "row2" }, field("電話", iPhone), field("預設收件地址", iAddr)), msg,
+    h("div", { class: "btnRow" }, save,
+      h("button", { type: "button", class: "btnGhost", onclick: async () => {
+        try { await sendPasswordResetEmail(auth, user.email); msg.className = "msg ok"; msg.textContent = "重設密碼信已寄到 " + user.email; }
+        catch (e) { msg.className = "msg"; msg.textContent = errText(e); }
+      } }, "寄送重設密碼信"))));
+}
+
+function orderRow(o, admin = false) {
+  const items = (o.items || []).map(i => String(i.name) + " × " + Number(i.qty)).join("、");
+  const s = o.shippingInfo || {};
+  const left = h("div", { style: "flex:1;min-width:0" },
+    h("b", {}, fmt(o.total)), " ", h("span", { class: "badge" }, ORDER_STATUS[o.status] || o.status), " ", h("span", { class: "badge" }, PAY_STATUS[o.paymentStatus] || o.paymentStatus),
+    h("small", {}, fmtDate(o.createdAt) + "・" + (PAY_LABEL[o.paymentMethod] || o.paymentMethod) + "・單號 " + o.id),
+    h("small", {}, items),
+    admin ? h("small", {}, "收件：" + (s.name || "") + "／" + (s.phone || "") + "／" + (s.address || "")) : null);
+  if (!admin) return h("div", { class: "listRow" }, left);
+  const selS = h("select", {}, Object.entries(ORDER_STATUS).map(([k, v]) => h("option", { value: k }, v)));
+  const selP = h("select", {}, Object.entries(PAY_STATUS).map(([k, v]) => h("option", { value: k }, v)));
+  selS.value = o.status; selP.value = o.paymentStatus;
+  const upd = async () => {
+    try { await updateDoc(doc(db, "orders", o.id), { status: selS.value, paymentStatus: selP.value, updatedAt: serverTimestamp() }); toast("✓ 訂單已更新"); }
+    catch (e) { toast(errText(e)); }
+  };
+  selS.addEventListener("change", upd); selP.addEventListener("change", upd);
+  return h("div", { class: "listRow", style: "align-items:flex-start;flex-wrap:wrap" }, left,
+    h("div", { style: "display:flex;gap:6px;flex-wrap:wrap" }, selS, selP));
+}
+
+async function tabOrders(body) {
+  body.append("載入中…");
+  try {
+    const snap = await getDocs(query(collection(db, "orders"), where("userId", "==", user.uid)));
+    const list = snap.docs.map(d => ({ id: d.id, ...d.data() })).sort((a, b) => (b.createdAt?.toMillis?.() || 0) - (a.createdAt?.toMillis?.() || 0));
+    body.replaceChildren(...(list.length ? list.map(o => orderRow(o)) : [h("div", { class: "emptyNote", style: "padding:24px 0" }, "目前沒有訂單。")]));
+  } catch (e) { body.replaceChildren(h("div", { class: "msg" }, errText(e))); }
+}
+
+/* ================= 管理員：商品管理 ================= */
+async function tabAdminProducts(body) {
+  const list = h("div"), formBox = h("div");
+  const seed = async () => {
+    try {
+      const b = writeBatch(db);
+      DEFAULT_PRODUCTS.forEach(p => {
+        const { id, ...d } = p;
+        if (d.oldPrice === undefined) delete d.oldPrice;
+        b.set(doc(db, "products", id), { ...d, createdAt: serverTimestamp(), updatedAt: serverTimestamp() });
+      });
+      await b.commit(); toast("✓ 已匯入示範商品");
+    } catch (e) { toast(errText(e)); }
+  };
+  const del = async p => {
+    if (usingDefaults) { toast("請先按「匯入示範商品」"); return; }
+    if (!confirm("確定刪除「" + p.name + "」？")) return;
+    try { await deleteDoc(doc(db, "products", p.id)); toast("已刪除"); } catch (e) { toast(errText(e)); }
+  };
+  const renderList = () => list.replaceChildren(...products.map(p => h("div", { class: "listRow" },
+    h("div", { style: "min-width:0" }, h("b", {}, p.name), h("small", {}, (CATS[p.category] || p.category) + "・" + fmt(p.price) + (p.stock !== undefined ? "・庫存 " + p.stock : ""))),
+    h("div", { class: "btnRow", style: "margin:0;flex-wrap:nowrap" },
+      h("button", { class: "btnGhost", onclick: () => showForm(p) }, "編輯"),
+      h("button", { class: "btnGhost", onclick: () => del(p) }, "刪除")))));
+
+  function showForm(p) {
+    if (p && usingDefaults) { toast("請先按「匯入示範商品」，再編輯商品"); return; }
+    const v = p || {};
+    const iName = h("input", { type: "text", maxlength: "100", value: v.name || "", required: true });
+    const iCat = h("select", {}, Object.entries(CATS).map(([k, t]) => h("option", { value: k }, t + "（" + k + "）"))); iCat.value = v.category || "AROMA";
+    const iPrice = h("input", { type: "number", min: "0", max: "1000000", step: "1", value: v.price ?? "", required: true });
+    const iOld = h("input", { type: "number", min: "0", max: "1000000", step: "1", value: v.oldPrice ?? "", placeholder: "選填" });
+    const iStock = h("input", { type: "number", min: "0", step: "1", value: v.stock ?? 10, required: true });
+    const iTag = h("input", { type: "text", maxlength: "20", value: v.tag || "", placeholder: "例如 NEW、限量" });
+    const iRate = h("input", { type: "number", min: "0", max: "5", step: "1", value: v.rating ?? 5 });
+    const iRev = h("input", { type: "number", min: "0", step: "1", value: v.reviews ?? 0 });
+    const iImg = h("input", { type: "url", maxlength: "500", value: v.image || "", placeholder: "https:// 開頭的圖片網址" });
+    const iDesc = h("textarea", { maxlength: "2000" }); iDesc.value = v.description || "";
+    const msg = h("div", { class: "msg" });
+    const save = h("button", { class: "btnMain", type: "submit" }, p ? "更新商品" : "建立商品");
+    formBox.replaceChildren(h("form", {
+      style: "background:#faf8f5;border:1px solid #eee7e1;border-radius:16px;padding:18px;margin:14px 0",
+      onsubmit: async ev => {
+        ev.preventDefault(); msg.className = "msg";
+        const price = Number(iPrice.value), stock = Number(iStock.value), rating = Number(iRate.value), reviews = Number(iRev.value);
+        const img = iImg.value.trim();
+        if (!iName.value.trim()) { msg.textContent = "請輸入商品名稱"; return; }
+        if (!Number.isFinite(price) || price < 0) { msg.textContent = "價格不正確"; return; }
+        if (!Number.isInteger(stock) || stock < 0) { msg.textContent = "庫存需為 0 以上整數"; return; }
+        if (!(rating >= 0 && rating <= 5) || !Number.isInteger(reviews) || reviews < 0) { msg.textContent = "評分／評價數不正確"; return; }
+        if (img && !safeImg(img)) { msg.textContent = "圖片網址需為 https 且不含空白或引號"; return; }
+        const data = { name: iName.value.trim(), category: iCat.value, price, stock, tag: iTag.value.trim(), rating, reviews, image: img, description: iDesc.value.trim(), updatedAt: serverTimestamp() };
+        if (iOld.value !== "") { const o = Number(iOld.value); if (!Number.isFinite(o) || o < 0) { msg.textContent = "原價不正確"; return; } data.oldPrice = o; }
+        else if (p) data.oldPrice = deleteField();
+        save.disabled = true;
+        try {
+          if (p) await setDoc(doc(db, "products", p.id), data, { merge: true });
+          else await setDoc(doc(collection(db, "products")), { ...data, createdAt: serverTimestamp() });
+          formBox.replaceChildren(); toast(p ? "✓ 商品已更新" : "✓ 商品已建立");
+        } catch (e) { msg.textContent = errText(e); save.disabled = false; }
+      }
+    },
+      h("b", {}, p ? "編輯商品" : "新增商品"), h("div", { style: "height:10px" }),
+      field("商品名稱", iName),
+      h("div", { class: "row2" }, field("分類", iCat), field("標籤", iTag)),
+      h("div", { class: "row2" }, field("售價 (NT$)", iPrice), field("原價 (NT$)", iOld)),
+      h("div", { class: "row2" }, field("庫存", iStock), field("評分 (0–5)", iRate)),
+      h("div", { class: "row2" }, field("評價數", iRev), field("圖片網址", iImg)),
+      field("商品說明", iDesc), msg,
+      h("div", { class: "btnRow" }, save, h("button", { type: "button", class: "btnGhost", onclick: () => formBox.replaceChildren() }, "取消"))));
+  }
+
+  body.append(h("div", { class: "btnRow" },
+    h("button", { class: "btnMain", onclick: () => showForm(null) }, "＋ 新增商品"),
+    usingDefaults ? h("button", { class: "btnGhost", onclick: seed }, "匯入示範商品") : null),
+    formBox, list);
+  renderList();
+  productsListener = renderList;
+}
+
+async function tabAdminOrders(body) {
+  body.append("載入中…");
+  try {
+    const snap = await getDocs(query(collection(db, "orders"), orderBy("createdAt", "desc"), limit(50)));
+    const list = snap.docs.map(d => ({ id: d.id, ...d.data() }));
+    body.replaceChildren(...(list.length ? list.map(o => orderRow(o, true)) : [h("div", { class: "emptyNote", style: "padding:24px 0" }, "目前沒有訂單。")]));
+  } catch (e) { body.replaceChildren(h("div", { class: "msg" }, errText(e))); }
+}
+
+/* ================= 結帳 / 付款 ================= */
+async function openCheckout() {
+  if (!cart.length) { toast("購物袋目前是空的"); return; }
+  if (!user) { closeCart(); openAuth("login", "請先登入會員再結帳（購物袋內容會保留）"); return; }
+  closeCart();
+  const p = profile || {};
+  const sub = cartSubtotal();
+  let first = false;
+  try { first = (await getDocs(query(collection(db, "orders"), where("userId", "==", user.uid), limit(1)))).empty; } catch (e) { console.warn(e); }
+  const discount = first ? Math.round(sub * (1 - NEW_MEMBER_RATE)) : 0;
+  const shipping = sub >= FREE_SHIP ? 0 : SHIP_FEE;
+  const total = sub - discount + shipping;
+
+  const iName = h("input", { type: "text", maxlength: "50", value: p.name || "", required: true });
+  const iPhone = h("input", { type: "tel", maxlength: "20", value: p.phone || "", required: true, placeholder: "0912-345-678" });
+  const iAddr = h("input", { type: "text", maxlength: "200", value: p.address || "", required: true, placeholder: "縣市、區、路街、號、樓" });
+  const iNote = h("textarea", { maxlength: "200", placeholder: "選填" });
+  const msg = h("div", { class: "msg" });
+  const submit = h("button", { class: "btnMain", type: "submit", style: "width:100%;margin-top:6px" }, "確認下單　" + fmt(total));
+  const payOpts = [
+    ["cod", "貨到付款", "收貨時以現金付款"],
+    ["transfer", "銀行轉帳", "下單後依通知匯款，確認入帳後出貨"],
+    ["card", "信用卡線上付款（示範）", "尚未串接真實金流，訂單建立後為「未付款」"]
+  ].map(([val, t, d], i) => h("label", { class: "payOpt" }, h("input", { type: "radio", name: "pay", value: val, checked: i === 0 }), h("span", {}, t, h("small", {}, d))));
+
+  const form = h("form", {
+    onsubmit: async ev => {
+      ev.preventDefault(); msg.className = "msg";
+      const name = iName.value.trim(), phone = iPhone.value.trim(), address = iAddr.value.trim(), note = iNote.value.trim();
+      const pay = (payOpts.map(l => l.querySelector("input")).find(i => i.checked) || {}).value;
+      if (!name || name.length > 50) { msg.textContent = "請輸入收件人姓名"; return; }
+      if (!/^[0-9+\-\s()]{8,20}$/.test(phone)) { msg.textContent = "請輸入正確的電話"; return; }
+      if (address.length < 5) { msg.textContent = "請輸入完整收件地址"; return; }
+      if (!PAY_LABEL[pay]) { msg.textContent = "請選擇付款方式"; return; }
+      submit.disabled = true;
+      try {
+        const items = cart.map(i => ({ pid: i.pid, name: i.name, price: effPrice(i), qty: i.qty }));
+        const subtotal = items.reduce((s, i) => s + i.price * i.qty, 0);
+        const disc = first ? Math.round(subtotal * (1 - NEW_MEMBER_RATE)) : 0;
+        const ship = subtotal >= FREE_SHIP ? 0 : SHIP_FEE;
+        const order = {
+          userId: user.uid, items, subtotal, discount: disc, shipping: ship, total: subtotal - disc + ship,
+          status: "pending", paymentMethod: pay, paymentStatus: "unpaid",
+          shippingInfo: { name, phone, address }, createdAt: serverTimestamp()
+        };
+        if (note) order.note = note;
+        const ref = await addDoc(collection(db, "orders"), order);
+        const b = writeBatch(db);
+        cart.forEach(i => b.delete(doc(db, "carts", user.uid, "items", i.pid)));
+        await b.commit().catch(console.warn);
+        if (profile && !profile.address) { updateDoc(doc(db, "users", user.uid), { phone, address, updatedAt: serverTimestamp() }).catch(() => {}); }
+        showOrderDone(ref.id, order);
+        if (pay === "card" && /^https:\/\//.test(PAYMENT_LINK_URL)) window.open(PAYMENT_LINK_URL, "_blank", "noopener");
+      } catch (e) { msg.textContent = errText(e); submit.disabled = false; }
+    }
+  },
+    field("收件人", iName), h("div", { class: "row2" }, field("電話", iPhone), field("地址", iAddr)),
+    field("備註", iNote),
+    h("b", { style: "font-size:14px" }, "付款方式"), h("div", { style: "height:8px" }), ...payOpts,
+    h("div", { style: "margin:14px 0 6px" },
+      h("div", { class: "sumLine" }, h("span", {}, "商品小計（" + cart.reduce((s, i) => s + i.qty, 0) + " 件）"), h("span", {}, fmt(sub))),
+      first ? h("div", { class: "sumLine" }, h("span", {}, "新會員首購 95 折"), h("span", {}, "−" + fmt(discount))) : null,
+      h("div", { class: "sumLine" }, h("span", {}, "運費" + (shipping === 0 ? "（滿 NT$1,500 免運）" : "")), h("span", {}, fmt(shipping))),
+      h("div", { class: "sumLine total" }, h("span", {}, "應付總額"), h("span", {}, fmt(total)))),
+    msg, submit);
+  openModal([h("h2", {}, "結帳"), h("p", { class: "sub" }, "確認收件資訊與付款方式"), h("div", { style: "height:12px" }), form]);
+}
+
+function showOrderDone(id, o) {
+  const tip = {
+    cod: "商品出貨後，請於收貨時以現金付款。",
+    transfer: "請依客服通知的帳號匯款，入帳確認後安排出貨。",
+    card: "此為示範流程，尚未串接線上刷卡；店家確認後會通知付款方式。"
+  }[o.paymentMethod];
+  openModal([
+    h("h2", {}, "✓ 訂單已成立"),
+    h("p", { class: "sub" }, "感謝您的購買！"),
+    h("div", { style: "margin:16px 0;line-height:2;font-size:14px" },
+      h("div", {}, "訂單編號：", h("b", {}, id)),
+      h("div", {}, "應付金額：", h("b", {}, fmt(o.total))),
+      h("div", {}, "付款方式：" + PAY_LABEL[o.paymentMethod]),
+      h("div", { style: "color:#807670" }, tip)),
+    h("div", { class: "btnRow" },
+      h("button", { class: "btnMain", onclick: () => openMember("orders") }, "查看我的訂單"),
+      h("button", { class: "btnGhost", onclick: closeModal }, "繼續逛逛"))
+  ]);
+}
+
+/* ================= 電子報訂閱 ================= */
+async function subscribe() {
+  const e = $("email").value.trim().toLowerCase();
+  if (!/^[^@\s\/]+@[^@\s\/]+\.[^@\s\/]+$/.test(e) || e.length > 100) { toast("請輸入正確 Email"); return; }
+  try {
+    await setDoc(doc(db, "subscribers", e), { email: e, createdAt: serverTimestamp() });
+    $("email").value = ""; toast("訂閱成功！歡迎加入 VELORA。");
+  } catch (err) {
+    toast(err && err.code === "permission-denied" ? "此 Email 已訂閱過囉" : errText(err));
+  }
+}
+
+/* ================= 登入狀態 ================= */
+async function ensureProfile(u) {
+  const ref = doc(db, "users", u.uid);
+  const snap = await getDoc(ref);
+  if (snap.exists()) return snap.data();
+  const data = {
+    name: (pendingName || u.displayName || (u.email || "").split("@")[0] || "會員").slice(0, 50),
+    phone: "", address: "", email: u.email, createdAt: serverTimestamp(), updatedAt: serverTimestamp()
+  };
+  await setDoc(ref, data);
+  if (pendingName) updateProfile(u, { displayName: data.name }).catch(() => {});
+  pendingName = "";
+  return data;
+}
+async function mergeLocalCart(u) {
+  const local = loadLocal();
+  if (!local.length) return;
+  const snap = await getDocs(collection(db, "carts", u.uid, "items"));
+  const have = new Map(snap.docs.map(d => [d.id, d.data().qty || 0]));
+  for (const it of local) {
+    const q = Math.min(99, (have.get(it.pid) || 0) + it.qty);
+    await setDoc(doc(db, "carts", u.uid, "items", it.pid), { pid: it.pid, name: String(it.name).slice(0, 100), price: Number(it.price) || 0, image: safeImg(it.image), qty: q, updatedAt: serverTimestamp() });
+  }
+  try { localStorage.removeItem(LS); } catch {}
+}
+
+onAuthStateChanged(auth, async u => {
+  user = u; isAdmin = false; profile = null;
+  if (unsubCart) { unsubCart(); unsubCart = null; }
+  if (u) {
+    try { profile = await ensureProfile(u); } catch (e) { console.warn(e); }
+    try { isAdmin = (await getDoc(doc(db, "admins", u.uid))).exists(); } catch { isAdmin = false; }
+    try { await mergeLocalCart(u); } catch (e) { console.warn(e); }
+    unsubCart = onSnapshot(collection(db, "carts", u.uid, "items"), snap => {
+      cart = snap.docs.map(d => { const x = d.data(); return { pid: d.id, name: String(x.name || ""), price: Number(x.price) || 0, image: safeImg(x.image), qty: Number(x.qty) || 1 }; });
+      renderCart();
+    }, e => console.warn(e));
+  } else { cart = loadLocal(); renderCart(); }
+  const b = $("clickEl7");
+  b.textContent = u ? "♥" : "♡";
+  b.title = u ? "會員中心（" + (u.email || "") + "）" : "會員登入 / 會員中心";
+});
+
+/* ================= 事件綁定（沿用原有元素 id） ================= */
+$("styleEl1").addEventListener("click", () => toast("🎉 本週會員滿 NT$1,500 免運，新會員首購再享 95 折！"));
+$("clickEl6").addEventListener("click", () => { const a = $("searchBox"); a.style.display = a.style.display === "block" ? "none" : "block"; if (a.style.display === "block") $("searchInput").focus(); });
+$("clickEl7").addEventListener("click", () => (user ? openMember() : openAuth()));
+$("clickEl8").addEventListener("click", openCart);
+$("styleEl10").addEventListener("click", applySearch);
+$("searchInput").addEventListener("keydown", e => { if (e.key === "Enter") applySearch(); });
+$("styleEl35").addEventListener("click", e => { e.preventDefault(); toast("品牌故事頁示範"); });
+$("styleEl42").addEventListener("click", subscribe);
+$("styleEl48").addEventListener("click", closeCart);
+$("styleEl51").addEventListener("click", openCheckout);
+$("mask").addEventListener("click", closeCart);
+document.querySelectorAll(".cat[data-cat]").forEach(el => el.addEventListener("click", () => {
+  filter = { cat: el.dataset.cat, key: "" }; $("searchInput").value = ""; renderProducts();
+  document.getElementById("products").scrollIntoView({ behavior: "smooth" });
+}));
+
+/* 初始畫面 */
+cart = loadLocal();
+renderProducts();
+renderCart();
+</script>
+</body>
+</html>
